@@ -1,0 +1,17 @@
+<header><h1 class="display-4"><%= @place.title %></h1></header>
+
+<p>Address: <%= @place.address %></p>
+<p>Coordinates: <%= @place.latitude %> <%= @place.longitude %></p>
+<p>Ip: <%= request.remote_ip %></p>
+<p>Country: <%= request.location.country %>    </p>
+
+<p>City: <%= request.location.inspect %>    </p>
+Nearby places :
+
+<ul>
+<% for location in @place.nearbys(1020) %>
+  <li><%= link_to location.address, location %> (<%= location.distance.round(2) %> miles)</li>
+<% end %>
+</ul>
+<%= image_tag "http://maps.googleapis.com/maps/api/staticmap?center=#{@place.latitude},#{@place.longitude}&markers=#{@place.latitude},#{@place.longitude}&zoom=7&size=640x400&key=AIzaSyA4BHW3txEdqfxzdTlPwaHsYRSZbfeIcd8",
+              class: 'img-fluid img-rounded', alt: "#{@place.title} on the map"%>
